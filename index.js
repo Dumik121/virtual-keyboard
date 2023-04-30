@@ -166,10 +166,10 @@ function addElement() {
 }
 
 let fired = false;
+let Throw = false;
 
 document.onkeydown = function (event) {
   const textarea = document.querySelector("#textarea");
-
 
   // Determine which key was pressed
   const keyPressed = event.key;
@@ -195,9 +195,12 @@ document.onkeydown = function (event) {
     event.code == "ShiftLeft" ||
     event.code == "ShiftRight"
   ) {
-    document
-      .querySelector('#content .keycap-middle[id="' + event.code + '"]')
-      .classList.add("active");
+    if (event.code != "CapsLock") {
+      document
+        .querySelector('#content .keycap-middle[id="' + event.code + '"]')
+        .classList.add("active");
+        //console.log('What')
+    }
     // Update the value of the textarea based on the key pressed
     if (keyPressed === "Backspace" && !textarea.classList.contains("active")) {
       textarea.value = textarea.value.slice(0, -1);
@@ -205,11 +208,35 @@ document.onkeydown = function (event) {
     if (keyPressed === "Enter" && !textarea.classList.contains("active")) {
       textarea.value += "\n";
     }
-    if(!fired) {
+    if (!fired) {
       fired = true;
-    if (event.code === "ShiftLeft" || event.code === "ShiftRight") {
-      PressShift();
+      if (event.code === "ShiftLeft" || event.code === "ShiftRight") {
+        PressShift();
+      }
     }
+    
+    if (!Throw) {
+      Throw = true;
+    if (event.code === "CapsLock") {
+      const Upper = document.querySelector('#content').children;
+      document
+        .querySelector('#content .keycap-middle[id="' + event.code + '"]')
+        .classList.toggle("active");
+        if(CapsLock.classList.contains("active")){
+          for (let i=0 ;i<keys.length;i++) {
+            if(Upper[i].textContent.length === 1){
+              Upper[i].textContent= Upper[i].textContent.toUpperCase();
+            }
+          }
+        }
+        else{
+          for (let i=0 ;i<keys.length;i++) {
+            if(Upper[i].textContent.length === 1){
+              Upper[i].textContent= Upper[i].textContent.toLowerCase();
+            }
+          }
+        }
+        }
     }
   } else {
     document
@@ -230,6 +257,7 @@ document.onkeydown = function (event) {
 //remove key active while keyup event
 document.onkeyup = function (event) {
   fired = false;
+  Throw = false;
 
   if (event.code == "Space") {
     document
@@ -243,12 +271,14 @@ document.onkeyup = function (event) {
     event.code == "ShiftLeft" ||
     event.code == "ShiftRight"
   ) {
-    document
-      .querySelector('#content .keycap-middle[id="' + event.code + '"]')
-      .classList.remove("active");
+    if (event.code != "CapsLock") {
+      document
+        .querySelector('#content .keycap-middle[id="' + event.code + '"]')
+        .classList.remove("active");
       if (event.code === "ShiftLeft" || event.code === "ShiftRight") {
         addElement();
       }
+    }
   } else {
     document
       .querySelector('#content .keycap-small[id="' + event.code + '"]')
@@ -331,7 +361,7 @@ function PressShift() {
       content.removeChild(content.lastElementChild);
     }
   }
- 
+
   let val = "";
   for (let i in keys) {
     val +=
@@ -344,6 +374,4 @@ function PressShift() {
       "</div>";
   }
   document.querySelector("#content").innerHTML = val;
-
- 
 }

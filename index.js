@@ -199,7 +199,7 @@ document.onkeydown = function (event) {
       document
         .querySelector('#content .keycap-middle[id="' + event.code + '"]')
         .classList.add("active");
-        //console.log('What')
+      //console.log('What')
     }
     // Update the value of the textarea based on the key pressed
     if (keyPressed === "Backspace" && !textarea.classList.contains("active")) {
@@ -214,29 +214,28 @@ document.onkeydown = function (event) {
         PressShift();
       }
     }
-    
+
     if (!Throw) {
       Throw = true;
-    if (event.code === "CapsLock") {
-      const Upper = document.querySelector('#content').children;
-      document
-        .querySelector('#content .keycap-middle[id="' + event.code + '"]')
-        .classList.toggle("active");
-        if(CapsLock.classList.contains("active")){
-          for (let i=0 ;i<keys.length;i++) {
-            if(Upper[i].textContent.length === 1){
-              Upper[i].textContent= Upper[i].textContent.toUpperCase();
+      if (event.code === "CapsLock") {
+        const Upper = document.querySelector("#content").children;
+        document
+          .querySelector('#content .keycap-middle[id="' + event.code + '"]')
+          .classList.toggle("active");
+        if (CapsLock.classList.contains("active")) {
+          for (let i = 0; i < keys.length; i++) {
+            if (Upper[i].textContent.length === 1) {
+              Upper[i].textContent = Upper[i].textContent.toUpperCase();
+            }
+          }
+        } else {
+          for (let i = 0; i < keys.length; i++) {
+            if (Upper[i].textContent.length === 1) {
+              Upper[i].textContent = Upper[i].textContent.toLowerCase();
             }
           }
         }
-        else{
-          for (let i=0 ;i<keys.length;i++) {
-            if(Upper[i].textContent.length === 1){
-              Upper[i].textContent= Upper[i].textContent.toLowerCase();
-            }
-          }
-        }
-        }
+      }
     }
   } else {
     document
@@ -329,10 +328,33 @@ document.onclick = function (event) {
     if (event.target.id === "Enter") {
       textarea.value += "\n";
     }
+    if (event.target.id == "ShiftLeft" || event.target.id == "ShiftRight") {
+      //PressShift();
+    }
+
+    if (event.target.id === "CapsLock") {
+      key.classList.toggle("active");
+      const Upper = document.querySelector("#content").children;
+      if (CapsLock.classList.contains("active")) {
+        for (let i = 0; i < keys.length; i++) {
+          if (Upper[i].textContent.length === 1) {
+            Upper[i].textContent = Upper[i].textContent.toUpperCase();
+          }
+        }
+      } else {
+        for (let i = 0; i < keys.length; i++) {
+          if (Upper[i].textContent.length === 1) {
+            Upper[i].textContent = Upper[i].textContent.toLowerCase();
+          }
+        }
+      }
+    }
+    if(event.target.id != "CapsLock"){
     key.classList.add("active");
     setTimeout(function () {
       key.classList.remove("active");
     }, 200);
+  }
   } else {
     const key = document.querySelector(
       '#content .keycap-small[id="' + event.target.id + '"]'

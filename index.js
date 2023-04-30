@@ -66,17 +66,90 @@ const keys = [
   { eventcode: "ArrowRight", value: "→", class: "keycap-small" },
   { eventcode: "ControlRight", value: "Ctrl", class: "keycap-small" },
 ];
+const Shiftkeys = [
+  { value: "~" },
+  { value: "!" },
+  { value: "@" },
+  { value: "#" },
+  { value: "$" },
+  { value: "%" },
+  { value: "^" },
+  { value: "&" },
+  { value: "*" },
+  { value: "(" },
+  { value: ")" },
+  { value: "_" },
+  { value: "+" },
+  { value: "Backspace" },
+  { value: "Tab" },
+  { value: "Q" },
+  { value: "W" },
+  { value: "E" },
+  { value: "R" },
+  { value: "T" },
+  { value: "Y" },
+  { value: "U" },
+  { value: "I" },
+  { value: "O" },
+  { value: "P" },
+  { value: "{" },
+  { value: "}" },
+  { value: "|" },
+  { value: "Del" },
+  { value: "CapsLock" },
+  { value: "A" },
+  { value: "S" },
+  { value: "D" },
+  { value: "F" },
+  { value: "G" },
+  { value: "H" },
+  { value: "J" },
+  { value: "K" },
+  { value: "L" },
+  { value: ":" },
+  { value: '"' },
+  { value: "Enter" },
+  { value: "Shift" },
+  { value: "Z" },
+  { value: "X" },
+  { value: "C" },
+  { value: "V" },
+  { value: "B" },
+  { value: "N" },
+  { value: "M" },
+  { value: "<" },
+  { value: ">" },
+  { value: "?" },
+  { value: "↑" },
+  { value: "Shift" },
+  { value: "Ctrl" },
+  { value: "Win" },
+  { value: "Alt" },
+  { value: "" },
+  { value: "Alt" },
+  { value: "←" },
+  { value: "↓" },
+  { value: "→" },
+  { value: "Ctrl" },
+];
+
+var textarea = document.createElement("textarea");
+textarea.className = "textarea";
+textarea.id = "textarea";
+var newDiv = document.createElement("div");
+newDiv.className = "keyboard__Container";
+newDiv.id = "content";
+document.body.appendChild(textarea);
+document.body.appendChild(newDiv);
 
 //add elemets to html
 function addElement() {
-  var textarea = document.createElement("textarea");
-  textarea.className = "textarea";
-  textarea.id = "textarea";
-  var newDiv = document.createElement("div");
-  newDiv.className = "keyboard__Container";
-  newDiv.id = "content";
-  document.body.appendChild(textarea);
-  document.body.appendChild(newDiv);
+  const content = document.getElementById("content");
+  if (content) {
+    while (content.lastElementChild) {
+      content.removeChild(content.lastElementChild);
+    }
+  }
 
   let val = "";
   for (let i in keys) {
@@ -92,8 +165,11 @@ function addElement() {
   document.querySelector("#content").innerHTML = val;
 }
 
+let fired = false;
+
 document.onkeydown = function (event) {
   const textarea = document.querySelector("#textarea");
+
 
   // Determine which key was pressed
   const keyPressed = event.key;
@@ -129,6 +205,12 @@ document.onkeydown = function (event) {
     if (keyPressed === "Enter" && !textarea.classList.contains("active")) {
       textarea.value += "\n";
     }
+    if(!fired) {
+      fired = true;
+    if (event.code === "ShiftLeft" || event.code === "ShiftRight") {
+      PressShift();
+    }
+    }
   } else {
     document
       .querySelector('#content .keycap-small[id="' + event.code + '"]')
@@ -147,6 +229,8 @@ document.onkeydown = function (event) {
 
 //remove key active while keyup event
 document.onkeyup = function (event) {
+  fired = false;
+
   if (event.code == "Space") {
     document
       .querySelector('#content .keycap-big[id="' + event.code + '"]')
@@ -162,6 +246,9 @@ document.onkeyup = function (event) {
     document
       .querySelector('#content .keycap-middle[id="' + event.code + '"]')
       .classList.remove("active");
+      if (event.code === "ShiftLeft" || event.code === "ShiftRight") {
+        addElement();
+      }
   } else {
     document
       .querySelector('#content .keycap-small[id="' + event.code + '"]')
@@ -236,3 +323,27 @@ document.onclick = function (event) {
     }, 200);
   }
 };
+
+function PressShift() {
+  const content = document.getElementById("content");
+  if (content) {
+    while (content.lastElementChild) {
+      content.removeChild(content.lastElementChild);
+    }
+  }
+ 
+  let val = "";
+  for (let i in keys) {
+    val +=
+      "<div class=" +
+      `${keys[i].class}` +
+      " id=" +
+      `${keys[i].eventcode}` +
+      ">" +
+      `${Shiftkeys[i].value}` +
+      "</div>";
+  }
+  document.querySelector("#content").innerHTML = val;
+
+ 
+}

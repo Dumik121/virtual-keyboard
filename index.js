@@ -172,7 +172,7 @@ document.onkeydown = function (event) {
   const textarea = document.querySelector("#textarea");
 
   // Determine which key was pressed
-  const keyPressed = event.key;
+  let keyPressed = event.key;
   if (
     event.code == "AltRight" ||
     event.code == "AltLeft" ||
@@ -248,6 +248,10 @@ document.onkeydown = function (event) {
       keyPressed != "Win" &&
       keyPressed != "Delete"
     ) {
+      if(keyPressed=='ArrowUp'){keyPressed="↑"}
+      if(keyPressed=='ArrowLeft'){keyPressed="←"}
+      if(keyPressed=='ArrowDown'){keyPressed="↓"}
+      if(keyPressed=='ArrowRight'){keyPressed="→"}
       textarea.value += keyPressed;
     }
   }

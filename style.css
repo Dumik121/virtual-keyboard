@@ -1,3 +1,7 @@
+body{
+  padding: 0;
+  margin: auto;
+}
 .textarea {
   width: 1000px;
   height: 250px;
@@ -29,6 +33,10 @@
   transition: 0.2s;
   cursor: pointer;
 }
+
+
+
+
 .keycap-middle{
   height: 50px;
   width: 100px;

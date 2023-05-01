@@ -73,7 +73,7 @@ text-align: center;
   cursor: pointer;
 }
 .keycap-small:hover {
-  background-color: rgb(255, 184, 184);
+  background-color: #e4e4e4;
 }
 .keycap-small.active {
   border-radius: 30px;

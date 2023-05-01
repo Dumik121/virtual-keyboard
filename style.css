@@ -81,7 +81,7 @@ text-align: center;
   background-color: #ccc;
 }
 .keycap-middle:hover {
-  background-color: rgb(255, 184, 184);
+  background-color: #e4e4e4;
 }
 .keycap-middle.active {
   border-radius: 30px;
@@ -89,7 +89,7 @@ text-align: center;
   background-color: #ccc;
 }
 .keycap-big:hover {
-  background-color: rgb(255, 184, 184);
+  background-color: #e4e4e4;
 }
 .keycap-big.active {
   border-radius: 30px;

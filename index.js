@@ -9,10 +9,10 @@ window.addEventListener("beforeunload", () => {
 });
 
 //function getLocalStorage() {
- // if (localStorage.getItem("isUkrainian")) {
-   // isUkrainian = localStorage.getItem("isUkrainian");
-   // console.log(isUkrainian)
-  //}
+// if (localStorage.getItem("isUkrainian")) {
+// isUkrainian = localStorage.getItem("isUkrainian");
+// console.log(isUkrainian)
+//}
 //}
 //window.addEventListener("load", getLocalStorage);
 //console.log(isUkrainian)
@@ -290,8 +290,6 @@ newDiv.className = "keyboard__Container";
 newDiv.id = "content";
 document.body.appendChild(textarea);
 document.body.appendChild(newDiv);
-
-
 
 //add elemets to html
 function addElement() {
@@ -658,3 +656,10 @@ function PressShift() {
     document.querySelector("#content").innerHTML = val;
   }
 }
+
+
+
+var text = document.createElement("p");
+text.className = "text";
+text.textContent='Для переключения языка комбинация: левыe ctrl + alt';
+document.body.appendChild(text);
